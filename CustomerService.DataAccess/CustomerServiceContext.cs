@@ -1,6 +1,6 @@
 ﻿
 using CustomerService.DataAccess.DTO;
-using CustomerService.Domain.Entitites;
+using CustomerService.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -130,9 +130,9 @@ namespace CustomerService.DataAccess
 
             return user;
         }
-        private Domain.Entitites.Address MapAddressDtoToEntity(AddressDTO aDTO)
+        private Domain.Entities.Address MapAddressDtoToEntity(AddressDTO aDTO)
         {
-            return new Domain.Entitites.Address
+            return new Domain.Entities.Address
             {
                 Zip = aDTO.Zip,
                 City = aDTO.City,

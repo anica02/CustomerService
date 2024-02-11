@@ -1,7 +1,7 @@
 ﻿
 using CustomerService.DataAccess;
 using CustomerService.DataAccess.DTO;
-using CustomerService.Domain.Entitites;
+using CustomerService.Domain.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;

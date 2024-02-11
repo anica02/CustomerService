@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CustomerService.Domain.Entitites
+namespace CustomerService.Domain.Entities
 {
     public  class Customer:Entity
     {
