@@ -67,6 +67,7 @@ namespace CustomerService.DataAccess
         public DbSet<Purchase> Purchases { get; set; }
 
         public DbSet<CustomerDiscount> CustomerDiscounts { get; set; }
+        public DbSet<LogEntry> LogEntries { get; set; }
     }
 
     public class MyDataProcessor
@@ -144,20 +145,7 @@ namespace CustomerService.DataAccess
             using (var dbContext = new CustomerServiceContext())
             {
                 
-                Role role1 = new Role();
-                role1.Name = "user";
-                role1.IsDefault = true;
-                dbContext.Roles.Add(role1);
-
-                Role role2 = new Role();
-                role2.Name = "agent";
-                role2.IsDefault = false;
-                dbContext.Roles.Add(role2);
-
-                dbContext.SaveChanges();
-                
-             
-
+              
                 foreach (var p in data)
                 {
 

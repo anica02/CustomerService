@@ -18,11 +18,15 @@ namespace CustomerService.API.Controllers
     public class DataController : ControllerBase
     {
         public readonly MyDataProcessor _dataProcessor;
+
+        public CustomerServiceContext _context;
+
         private List<object> _allCustomers;
 
-        public DataController(MyDataProcessor dataProcessor)
+        public DataController(MyDataProcessor dataProcessor, CustomerServiceContext context)
         {
             _dataProcessor = new MyDataProcessor();
+            _context = context;
            
         }
        
@@ -39,8 +43,6 @@ namespace CustomerService.API.Controllers
 
                 return Content(jsonData, "application/json");
             }
-           
-            
             catch
               (Exception ex)
             {
@@ -50,6 +52,46 @@ namespace CustomerService.API.Controllers
 
         }
        
+        [HttpPost]
+        public IActionResult Post()
+        {
+            
+            Role role1 = new Role();
+            role1.Name = "user";
+            role1.IsDefault = true;
+            _context.Roles.Add(role1);
+            _context.SaveChanges();
+
+            Role role2 = new Role();
+            role2.Name = "agent";
+            role2.IsDefault = false;
+            _context.Roles.Add(role2);
+            _context.SaveChanges();
+            
+
+            Role role3 = new Role();
+            role3.Name = "admin";
+            role3.IsDefault = false;
+            _context.Roles.Add(role3);
+            _context.SaveChanges();
+
+            string pass1 = "sifra123";
+            string passwordHash = BCrypt.Net.BCrypt.HashPassword(pass1);
+
+            User user1 = new User();
+            user1.RoleId = role2.Id;
+            user1.FirstName = "Petar";
+            user1.LastName = "Peric";
+            user1.Username = "pera.peric";
+            user1.Password = passwordHash;
+            user1.Email = "petar@gmail.com";
+            _context.Users.Add(user1);
+            _context.SaveChanges();
+
+            return StatusCode(201);
+
+        }
+
         public static async Task<object> GetPersonByIdAsync(string id)
         {
             SoapService.SOAPDemoSoapClient client = new SoapService.SOAPDemoSoapClient();
