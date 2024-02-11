@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace CustomerService.DataAccess.Migrations
 {
     [DbContext(typeof(CustomerServiceContext))]
-    [Migration("20240211134717_first")]
+    [Migration("20240211152631_first")]
     partial class first
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -21,7 +21,7 @@ namespace CustomerService.DataAccess.Migrations
                 .HasAnnotation("ProductVersion", "5.0.17")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Address", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Address", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -71,7 +71,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Addresses");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Customer", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Customer", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -149,38 +149,30 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Customers");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.CustomerDiscount", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.CustomerDiscount", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
-
                     b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
-                    b.Property<DateTime?>("DeletedAt")
-                        .HasColumnType("datetime2");
+                    b.Property<int>("AgentId")
+                        .HasColumnType("int");
 
-                    b.Property<string>("DeletedBy")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.Property<int>("DiscountPercentage")
                         .HasColumnType("int");
 
                     b.Property<bool>("IsActive")
-                        .HasColumnType("bit");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bit")
+                        .HasDefaultValue(false);
 
-                    b.Property<DateTime?>("ModifiedAt")
-                        .HasColumnType("datetime2");
+                    b.HasKey("CustomerId", "AgentId");
 
-                    b.Property<string>("ModifiedBy")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
+                    b.HasIndex("AgentId");
 
                     b.HasIndex("CustomerId")
                         .IsUnique();
@@ -188,7 +180,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("CustomerDiscounts");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.LogEntry", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.LogEntry", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -230,7 +222,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("LogEntries");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Price", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Price", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -269,7 +261,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Prices");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Purchase", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Purchase", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -319,7 +311,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Purchases");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Role", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Role", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -363,7 +355,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Roles");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.RoleUseCase", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.RoleUseCase", b =>
                 {
                     b.Property<int>("RoleId")
                         .HasColumnType("int");
@@ -376,7 +368,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("RoleUseCases");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Service", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Service", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -425,7 +417,7 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Services");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.User", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -490,17 +482,17 @@ namespace CustomerService.DataAccess.Migrations
                     b.ToTable("Users");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Customer", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Customer", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Address", "Home")
+                    b.HasOne("CustomerService.Domain.Entities.Address", "Home")
                         .WithMany()
                         .HasForeignKey("HomeId");
 
-                    b.HasOne("CustomerService.Domain.Entitites.Address", "Office")
+                    b.HasOne("CustomerService.Domain.Entities.Address", "Office")
                         .WithMany()
                         .HasForeignKey("OfficeId");
 
-                    b.HasOne("CustomerService.Domain.Entitites.Customer", "Spouse")
+                    b.HasOne("CustomerService.Domain.Entities.Customer", "Spouse")
                         .WithMany()
                         .HasForeignKey("SpouseId");
 
@@ -511,37 +503,45 @@ namespace CustomerService.DataAccess.Migrations
                     b.Navigation("Spouse");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.CustomerDiscount", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.CustomerDiscount", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Customer", "Customer")
-                        .WithOne("UserDiscount")
-                        .HasForeignKey("CustomerService.Domain.Entitites.CustomerDiscount", "CustomerId")
+                    b.HasOne("CustomerService.Domain.Entities.User", "Agent")
+                        .WithMany("CustomerDiscounts")
+                        .HasForeignKey("AgentId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.HasOne("CustomerService.Domain.Entities.Customer", "Customer")
+                        .WithOne("UserDiscount")
+                        .HasForeignKey("CustomerService.Domain.Entities.CustomerDiscount", "CustomerId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Agent");
 
                     b.Navigation("Customer");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Price", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Price", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Service", "Service")
+                    b.HasOne("CustomerService.Domain.Entities.Service", "Service")
                         .WithOne("Price")
-                        .HasForeignKey("CustomerService.Domain.Entitites.Price", "ServiceId")
+                        .HasForeignKey("CustomerService.Domain.Entities.Price", "ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Purchase", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Purchase", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Customer", "Customer")
+                    b.HasOne("CustomerService.Domain.Entities.Customer", "Customer")
                         .WithMany("Orders")
                         .HasForeignKey("CustomerId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.HasOne("CustomerService.Domain.Entitites.Service", "Service")
+                    b.HasOne("CustomerService.Domain.Entities.Service", "Service")
                         .WithMany("Orders")
                         .HasForeignKey("ServiceId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -552,9 +552,9 @@ namespace CustomerService.DataAccess.Migrations
                     b.Navigation("Service");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.RoleUseCase", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.RoleUseCase", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Role", "Role")
+                    b.HasOne("CustomerService.Domain.Entities.Role", "Role")
                         .WithMany("RoleUseCases")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -563,9 +563,9 @@ namespace CustomerService.DataAccess.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.User", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.User", b =>
                 {
-                    b.HasOne("CustomerService.Domain.Entitites.Role", "Role")
+                    b.HasOne("CustomerService.Domain.Entities.Role", "Role")
                         .WithMany("Users")
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Restrict)
@@ -574,25 +574,30 @@ namespace CustomerService.DataAccess.Migrations
                     b.Navigation("Role");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Customer", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Customer", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("UserDiscount");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Role", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Role", b =>
                 {
                     b.Navigation("RoleUseCases");
 
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("CustomerService.Domain.Entitites.Service", b =>
+            modelBuilder.Entity("CustomerService.Domain.Entities.Service", b =>
                 {
                     b.Navigation("Orders");
 
                     b.Navigation("Price");
+                });
+
+            modelBuilder.Entity("CustomerService.Domain.Entities.User", b =>
+                {
+                    b.Navigation("CustomerDiscounts");
                 });
 #pragma warning restore 612, 618
         }

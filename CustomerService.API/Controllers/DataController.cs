@@ -75,6 +75,12 @@ namespace CustomerService.API.Controllers
             _context.Roles.Add(role3);
             _context.SaveChanges();
 
+            RoleUseCase ruc1 = new RoleUseCase();
+            ruc1.RoleId = role2.Id;
+            ruc1.UseCaseId = 1;
+            _context.RoleUseCases.Add(ruc1);
+            _context.SaveChanges();
+
             string pass1 = "sifra123";
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(pass1);
 
@@ -87,6 +93,7 @@ namespace CustomerService.API.Controllers
             user1.Email = "petar@gmail.com";
             _context.Users.Add(user1);
             _context.SaveChanges();
+
 
             return StatusCode(201);
 

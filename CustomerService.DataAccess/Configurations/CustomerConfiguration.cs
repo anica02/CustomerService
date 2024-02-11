@@ -1,4 +1,4 @@
-﻿using CustomerService.Domain.Entitites;
+﻿using CustomerService.Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

@@ -33,7 +33,12 @@ namespace CustomerService.DataAccess
        
             modelBuilder.Entity<RoleUseCase>().HasKey(x => new { x.RoleId, x.UseCaseId });
             modelBuilder.Entity<Price>().Property(x => x.ServicePrice).IsRequired();
+
             modelBuilder.Entity<CustomerDiscount>().Property(x => x.DiscountPercentage).IsRequired();
+            modelBuilder.Entity<CustomerDiscount>().HasKey(x => new { x.CustomerId, x.AgentId });
+            modelBuilder.Entity<CustomerDiscount>().Property(x => x.IsActive).HasDefaultValue(false);
+            modelBuilder.Entity<CustomerDiscount>().Property(x => x.CreatedAt).HasDefaultValueSql("GETDATE()");
+
             modelBuilder.Entity<Purchase>().Property(x => x.Status).IsRequired();
             modelBuilder.Entity<Purchase>().Property(x => x.DiscountUsed).IsRequired();
             modelBuilder.Entity<Purchase>().Property(x => x.ActiveTill).IsRequired();

@@ -10,9 +10,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="UseCases\Commands\" />
     <Folder Include="UseCases\Queries\" />
-    <Folder Include="Validators\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FluentValidation" Version="11.9.0" />
   </ItemGroup>
 
 </Project>

@@ -1,4 +1,4 @@
-﻿using CustomerService.Domain.Entitites;
+﻿using CustomerService.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
@@ -20,7 +20,7 @@ namespace CustomerService.DataAccess.Configurations
             builder.HasIndex(x => x.Email).IsUnique();
             builder.Property(x => x.FirstName).IsRequired();
             builder.Property(x => x.LastName).IsRequired();
-
+            builder.HasMany(x => x.CustomerDiscounts).WithOne(x => x.Agent).HasForeignKey(x => x.AgentId).OnDelete(Microsoft.EntityFrameworkCore.DeleteBehavior.Restrict);
 
         }
     }

@@ -6,8 +6,11 @@ using CustomerService.API.Middleware;
 using CustomerService.Application;
 using CustomerService.Application.Logging;
 using CustomerService.Application.UseCaseHandiling;
+using CustomerService.Application.UseCases.Commands;
 using CustomerService.DataAccess;
 using CustomerService.Implementation.Logging;
+using CustomerService.Implementation.UseCases.Commands;
+using CustomerService.Implementation.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
@@ -118,6 +121,8 @@ namespace CustomerService.API
 
             services.AddTransient<IUseCaseLogger, EfUseCaseLogger>();
 
+            services.AddTransient<ICreateCustomerDiscountCommand, EfCreateCustomerDiscountCommand>();
+            services.AddTransient<CreateCustomerDiscountValidator>();
             services.AddHttpContextAccessor();
 
             services.AddControllers();

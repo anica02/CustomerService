@@ -58,6 +58,15 @@ namespace CustomerService.API.Middleware
                     message = ex.Message
                 });
             }
+            catch (CustomerDiscountException ex)
+            {
+                context.Response.StatusCode = 409;
+                await context.Response.WriteAsJsonAsync(new
+                {
+                    message = ex.Message
+                });
+            }
+           
             catch (NotFoundException ex)
             {
                 context.Response.StatusCode = 404;

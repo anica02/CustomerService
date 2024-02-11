@@ -1,4 +1,4 @@
-﻿using CustomerService.Domain.Entitites;
+﻿using CustomerService.Domain.Entities;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
 using System.Collections.Generic;
