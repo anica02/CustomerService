@@ -7,9 +7,11 @@ using CustomerService.Application;
 using CustomerService.Application.Logging;
 using CustomerService.Application.UseCaseHandiling;
 using CustomerService.Application.UseCases.Commands;
+using CustomerService.Application.UseCases.Queries;
 using CustomerService.DataAccess;
 using CustomerService.Implementation.Logging;
 using CustomerService.Implementation.UseCases.Commands;
+using CustomerService.Implementation.UseCases.Queries;
 using CustomerService.Implementation.Validators;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -123,6 +125,11 @@ namespace CustomerService.API
 
             services.AddTransient<ICreateCustomerDiscountCommand, EfCreateCustomerDiscountCommand>();
             services.AddTransient<CreateCustomerDiscountValidator>();
+
+            services.AddTransient<ICreatePurchaseCommand, EfCreatePurchaseCommand>();
+            services.AddTransient<CreatePurchaseValidator>();
+
+            services.AddTransient<IGetCustomersWithSuccessfulPurchaseQuery, EfGetCustomersPurchasesQuery>();
             services.AddHttpContextAccessor();
 
             services.AddControllers();

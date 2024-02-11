@@ -81,6 +81,18 @@ namespace CustomerService.API.Controllers
             _context.RoleUseCases.Add(ruc1);
             _context.SaveChanges();
 
+            RoleUseCase ruc2 = new RoleUseCase();
+            ruc2.RoleId = role2.Id;
+            ruc2.UseCaseId = 2;
+            _context.RoleUseCases.Add(ruc2);
+            _context.SaveChanges();
+
+            RoleUseCase ruc3 = new RoleUseCase();
+            ruc3.RoleId = role2.Id;
+            ruc3.UseCaseId = 3;
+            _context.RoleUseCases.Add(ruc3);
+            _context.SaveChanges();
+
             string pass1 = "sifra123";
             string passwordHash = BCrypt.Net.BCrypt.HashPassword(pass1);
 
@@ -92,6 +104,110 @@ namespace CustomerService.API.Controllers
             user1.Password = passwordHash;
             user1.Email = "petar@gmail.com";
             _context.Users.Add(user1);
+            _context.SaveChanges();
+
+            
+            Service service1 = new Service();
+            service1.Name = "Wired Network";
+            service1.TypeOfService = "Network";
+            service1.Description = "Uses cables to connect devices, such as laptop or desktop computers, to the Internet or another network";
+            _context.Services.Add(service1);
+            _context.SaveChanges();
+            
+
+            Price price1 = new Price();
+            price1.ServiceId = service1.Id;
+            price1.ServicePrice = 16.21;
+            _context.Prices.Add(price1);
+            _context.SaveChanges();
+
+            
+            Service service2 = new Service();
+            service2.Name = "Wireless Network";
+            service2.TypeOfService = "Network";
+            service2.Description = "A wireless network is a grouping, or network, of multiple devices where data is sent and received over radio frequencies";
+            _context.Services.Add(service2);
+            _context.SaveChanges();
+
+            Price price2 = new Price();
+            price2.ServiceId = service2.Id;
+            price2.ServicePrice = 25.60; 
+            _context.Prices.Add(price2);
+            _context.SaveChanges();
+
+            CustomerDiscount ud1 = new CustomerDiscount();
+            ud1.CustomerId = 1;
+            ud1.AgentId = user1.Id;
+            ud1.DiscountPercentage = 15;
+            _context.CustomerDiscounts.Add(ud1);
+            _context.SaveChanges();
+
+            CustomerDiscount ud2 = new CustomerDiscount();
+            ud2.CustomerId = 2;
+            ud2.AgentId = user1.Id;
+            ud2.DiscountPercentage = 20;
+            _context.CustomerDiscounts.Add(ud2);
+            _context.SaveChanges();
+
+            CustomerDiscount ud3 = new CustomerDiscount();
+            ud3.CustomerId = 3;
+            ud3.AgentId = user1.Id;
+            ud3.DiscountPercentage = 15;
+            _context.CustomerDiscounts.Add(ud3);
+            _context.SaveChanges();
+
+            CustomerDiscount ud4 = new CustomerDiscount();
+            ud4.CustomerId = 4;
+            ud4.AgentId = user1.Id;
+            ud4.DiscountPercentage = 25;
+            _context.CustomerDiscounts.Add(ud4);
+            _context.SaveChanges();
+
+            CustomerDiscount ud5 = new CustomerDiscount();
+            ud5.CustomerId = 5;
+            ud5.AgentId = user1.Id;
+            ud5.DiscountPercentage = 15;
+            _context.CustomerDiscounts.Add(ud5);
+            _context.SaveChanges();
+
+            Purchase p1 = new Purchase();
+            p1.CustomerId = 1;
+            p1.ServiceId = service1.Id;
+            p1.ActiveTill = new DateTime(2025,02,20);
+            p1.Status = "active";
+            _context.Purchases.Add(p1);
+            _context.SaveChanges();
+
+            Purchase p2 = new Purchase();
+            p2.CustomerId = 2;
+            p2.ServiceId = service1.Id;
+            p2.ActiveTill = new DateTime(2025, 02, 20);
+            p2.Status = "active";
+            _context.Purchases.Add(p2);
+            _context.SaveChanges();
+
+            Purchase p3 = new Purchase();
+            p3.CustomerId = 3;
+            p3.ServiceId = service1.Id;
+            p3.ActiveTill = new DateTime(2025, 02, 20);
+            p3.Status = "active";
+            _context.Purchases.Add(p3);
+            _context.SaveChanges();
+
+            Purchase p4 = new Purchase();
+            p4.CustomerId = 2;
+            p4.ServiceId = service2.Id;
+            p4.ActiveTill = new DateTime(2025, 02, 20);
+            p4.Status = "active";
+            _context.Purchases.Add(p4);
+            _context.SaveChanges();
+
+            Purchase p5 = new Purchase();
+            p5.CustomerId = 2;
+            p5.ServiceId = service1.Id;
+            p5.ActiveTill = new DateTime(2025, 02, 20);
+            p5.Status = "active";
+            _context.Purchases.Add(p5);
             _context.SaveChanges();
 
 
